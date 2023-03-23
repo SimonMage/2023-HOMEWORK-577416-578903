@@ -15,7 +15,7 @@ public class Partita {
 
 	private boolean finita;
 	//private int cfu;
-	private Labirinto labirintoDiGioco;
+	public Labirinto labirintoDiGioco;
 	
 	Giocatore giocatore = new Giocatore();
 	
