@@ -137,8 +137,8 @@ public class Stanza {
 	public boolean hasAttrezzo(String nomeAttrezzo) {
 		boolean trovato;
 		trovato = false;
-		for (Attrezzo attrezzo : this.attrezzi) {
-			if (attrezzo.getNome().equals(nomeAttrezzo))
+		for(int i = 0; i < numeroAttrezzi; i++) {
+			if (attrezzi[i].getNome().equals(nomeAttrezzo))
 				trovato = true;
 		}
 		return trovato;
@@ -153,9 +153,9 @@ public class Stanza {
 	public Attrezzo getAttrezzo(String nomeAttrezzo) {
 		Attrezzo attrezzoCercato;
 		attrezzoCercato = null;
-		for (Attrezzo attrezzo : this.attrezzi) {
-			if (attrezzo.getNome().equals(nomeAttrezzo))
-				attrezzoCercato = attrezzo;
+		for(int i = 0; i < numeroAttrezzi; i++) {
+			if (attrezzi[i].getNome().equals(nomeAttrezzo))
+				attrezzoCercato = attrezzi[i];
 		}
 		return attrezzoCercato;	
 	}
@@ -166,8 +166,25 @@ public class Stanza {
 	 * @return true se l'attrezzo e' stato rimosso, false altrimenti
 	 */
 	public boolean removeAttrezzo(Attrezzo attrezzo) {
-		// TODO da implementare
-		return false;
+		
+		if(attrezzo.equals(this.getAttrezzo(attrezzo.nome))) {
+			int pos = -1;
+			for(int i = 0; i < numeroAttrezzi; i++) {
+				if(attrezzi[i].getNome().equals(attrezzo.getNome())) {
+					pos = i;
+				}
+			}
+			attrezzi[pos] = null;
+			for(int i = pos; i < numeroAttrezzi-1; i++) {		
+				attrezzi[i] = attrezzi[i+1];
+			}
+			attrezzi[numeroAttrezzi] = null;
+			numeroAttrezzi--;
+			return true;
+		}else {
+			System.out.println("Attrezzo non trovato nella stanza");
+			return false;
+		}
 	}
 
 

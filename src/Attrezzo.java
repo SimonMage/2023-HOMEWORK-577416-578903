@@ -13,7 +13,7 @@
  */
 public class Attrezzo {
 
-	private String nome;
+	public String nome;
 	private int peso;
 
 	/**

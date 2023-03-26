@@ -1,5 +1,4 @@
 
-
 import java.util.Scanner;
 
 /**
@@ -26,7 +25,7 @@ public class DiaDia {
 			"o regalarli se pensi che possano ingraziarti qualcuno.\n\n"+
 			"Per conoscere le istruzioni usa il comando 'aiuto'.";
 	
-	static final private String[] elencoComandi = {"vai", "aiuto", "fine"};
+	static final private String[] elencoComandi = {"vai", "aiuto", "fine", "prendi", "posa"};
 
 	private Partita partita;
 
@@ -60,9 +59,16 @@ public class DiaDia {
 			if (comandoDaEseguire.getNome().equals("fine")) {
 				this.fine(); 
 				return true;
-			} else if (comandoDaEseguire.getNome().equals("vai"))
+			} else if (comandoDaEseguire.getNome().equals("vai")) {
 				this.vai(comandoDaEseguire.getParametro());
-			else if (comandoDaEseguire.getNome().equals("aiuto"))
+		
+			} else if (comandoDaEseguire.getNome().equals("prendi")) {
+				this.prendi(comandoDaEseguire.getParametro());
+			
+			} else if (comandoDaEseguire.getNome().equals("posa")) {
+				this.posa(comandoDaEseguire.getParametro());
+		
+			} else if (comandoDaEseguire.getNome().equals("aiuto"))
 				this.aiuto();
 			else
 				System.out.println("Comando sconosciuto");
@@ -84,6 +90,59 @@ public class DiaDia {
 		System.out.println();
 	}
 
+	private void prendi(String nomeAttrezzo) {
+		/*if(direzione==null)
+			System.out.println("Dove vuoi andare ?");
+		Stanza prossimaStanza = null;
+		prossimaStanza = this.partita.getStanzaCorrente().getStanzaAdiacente(direzione);
+		if (prossimaStanza == null)
+			System.out.println("Direzione inesistente");
+		else {
+			this.partita.setStanzaCorrente(prossimaStanza);
+			int cfu = this.partita.giocatore.getCfu();
+			this.partita.giocatore.setCfu(cfu--);
+		}
+		System.out.println(partita.getStanzaCorrente().getDescrizione());*/
+		//System.out.println("Ho preso l'oggetto: " + nomeAttrezzo);		
+		if(this.partita.labirintoDiGioco.stanzaCorrente.getAttrezzi().length != 0) {				
+			if(this.partita.labirintoDiGioco.stanzaCorrente.hasAttrezzo(nomeAttrezzo)) {
+				Attrezzo a = this.partita.labirintoDiGioco.stanzaCorrente.getAttrezzo(nomeAttrezzo);
+				this.partita.labirintoDiGioco.stanzaCorrente.removeAttrezzo(a);
+				boolean esito = this.partita.giocatore.getBorsa().addAttrezzo(a);
+				if (esito) {
+					System.out.println("Attrezzo aggiunto alla borsa");	
+				}else {
+					System.out.println("Attrezzo non aggiunto alla borsa");						
+				}
+			}else {
+				System.out.println("Non esiste quell'attrezzo nella stanza");				
+			}
+			
+		}else {
+			System.out.println("Non ci sono attrezzi in questa stanza");
+		}
+	}	
+	
+	private void posa(String nomeAttrezzo) {
+		if(!this.partita.giocatore.getBorsa().isEmpty()) {				
+			if(this.partita.giocatore.getBorsa().hasAttrezzo(nomeAttrezzo)) {
+				Attrezzo a = this.partita.giocatore.getBorsa().getAttrezzo(nomeAttrezzo);
+				this.partita.giocatore.getBorsa().removeAttrezzo(nomeAttrezzo);
+				boolean esito = this.partita.labirintoDiGioco.stanzaCorrente.addAttrezzo(a);
+				if (esito) {
+					System.out.println("Attrezzo rimosso dalla borsa");	
+				}else {
+					System.out.println("Attrezzo non rimosso dalla borsa");						
+				}
+			}else {
+				System.out.println("Non esiste quell'attrezzo nella borsa");				
+			}
+			
+		}else {
+			System.out.println("Non ci sono attrezzi nella borsa");
+		}
+	}
+
 	/**
 	 * Cerca di andare in una direzione. Se c'e' una stanza ci entra 
 	 * e ne stampa il nome, altrimenti stampa un messaggio di errore
@@ -97,8 +156,8 @@ public class DiaDia {
 			System.out.println("Direzione inesistente");
 		else {
 			this.partita.setStanzaCorrente(prossimaStanza);
-			int cfu = this.partita.getCfu();
-			this.partita.setCfu(cfu--);
+			int cfu = this.partita.giocatore.getCfu();
+			this.partita.giocatore.setCfu(cfu--);
 		}
 		System.out.println(partita.getStanzaCorrente().getDescrizione());
 	}
