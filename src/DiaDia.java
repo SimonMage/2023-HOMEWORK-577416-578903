@@ -90,20 +90,7 @@ public class DiaDia {
 		System.out.println();
 	}
 
-	private void prendi(String nomeAttrezzo) {
-		/*if(direzione==null)
-			System.out.println("Dove vuoi andare ?");
-		Stanza prossimaStanza = null;
-		prossimaStanza = this.partita.getStanzaCorrente().getStanzaAdiacente(direzione);
-		if (prossimaStanza == null)
-			System.out.println("Direzione inesistente");
-		else {
-			this.partita.setStanzaCorrente(prossimaStanza);
-			int cfu = this.partita.giocatore.getCfu();
-			this.partita.giocatore.setCfu(cfu--);
-		}
-		System.out.println(partita.getStanzaCorrente().getDescrizione());*/
-		//System.out.println("Ho preso l'oggetto: " + nomeAttrezzo);		
+	private void prendi(String nomeAttrezzo) {	
 		if(this.partita.labirintoDiGioco.stanzaCorrente.getAttrezzi().length != 0) {				
 			if(this.partita.labirintoDiGioco.stanzaCorrente.hasAttrezzo(nomeAttrezzo)) {
 				Attrezzo a = this.partita.labirintoDiGioco.stanzaCorrente.getAttrezzo(nomeAttrezzo);
