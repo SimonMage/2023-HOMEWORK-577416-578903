@@ -3,11 +3,9 @@
 */
 package it.uniroma3.diadia.ambienti;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
-import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.ambienti.Labirinto;
 
 public class Labirinto {
-	public Stanza stanzaCorrente;
 	public Stanza stanzaVincente;
     public Labirinto() {
 
@@ -36,7 +34,6 @@ public class Labirinto {
 		aulaN10.addAttrezzo(lanterna);
 		atrio.addAttrezzo(osso);
 
-        stanzaCorrente = atrio;
 		stanzaVincente = biblioteca;
 		
     }

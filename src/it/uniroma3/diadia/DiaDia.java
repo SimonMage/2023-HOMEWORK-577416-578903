@@ -39,12 +39,10 @@ public class DiaDia {
 
 	public void gioca(IOConsole IO) {
 		String istruzione; 
-		Scanner scannerDiLinee;
 
-		IO.mostraMessaggio(MESSAGGIO_BENVENUTO);
-		scannerDiLinee = new Scanner(System.in);		
+		IO.mostraMessaggio(MESSAGGIO_BENVENUTO);		
 		do		
-			istruzione = scannerDiLinee.nextLine();
+			istruzione = IO.leggiRiga();
 		while (!processaIstruzione(istruzione, IO));
 	}   
 

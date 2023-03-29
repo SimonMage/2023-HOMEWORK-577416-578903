@@ -11,6 +11,7 @@ import it.uniroma3.diadia.giocatore.Giocatore;
  */
 
 public class Partita {
+	public Stanza stanzaCorrente;
 
 	//static final private int CFU_INIZIALI = 20;
 
