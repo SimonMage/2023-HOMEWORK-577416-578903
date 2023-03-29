@@ -93,10 +93,10 @@ public class DiaDia {
 	}
 
 	private void prendi(String nomeAttrezzo, IOConsole IO) {	
-		if(this.partita.labirintoDiGioco.stanzaCorrente.getAttrezzi().length != 0) {				
-			if(this.partita.labirintoDiGioco.stanzaCorrente.hasAttrezzo(nomeAttrezzo)) {
-				Attrezzo a = this.partita.labirintoDiGioco.stanzaCorrente.getAttrezzo(nomeAttrezzo);
-				this.partita.labirintoDiGioco.stanzaCorrente.removeAttrezzo(a, IO);
+		if(this.partita.stanzaCorrente.getAttrezzi().length != 0) {				
+			if(this.partita.stanzaCorrente.hasAttrezzo(nomeAttrezzo)) {
+				Attrezzo a = this.partita.stanzaCorrente.getAttrezzo(nomeAttrezzo);
+				this.partita.stanzaCorrente.removeAttrezzo(a, IO);
 				boolean esito = this.partita.giocatore.getBorsa().addAttrezzo(a);
 				if (esito) {
 					IO.mostraMessaggio("Attrezzo aggiunto alla borsa");	
@@ -117,7 +117,7 @@ public class DiaDia {
 			if(this.partita.giocatore.getBorsa().hasAttrezzo(nomeAttrezzo)) {
 				Attrezzo a = this.partita.giocatore.getBorsa().getAttrezzo(nomeAttrezzo);
 				this.partita.giocatore.getBorsa().removeAttrezzo(nomeAttrezzo, IO);
-				boolean esito = this.partita.labirintoDiGioco.stanzaCorrente.addAttrezzo(a);
+				boolean esito = this.partita.stanzaCorrente.addAttrezzo(a);
 				if (esito) {
 					IO.mostraMessaggio("Attrezzo rimosso dalla borsa");	
 				}else {

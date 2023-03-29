@@ -7,12 +7,13 @@ import it.uniroma3.diadia.ambienti.Labirinto;
 
 public class Labirinto {
 	public Stanza stanzaVincente;
+	public Stanza atrio;
     public Labirinto() {
-
+    	
     	Attrezzo lanterna = new Attrezzo("lanterna",3);
 		Attrezzo osso = new Attrezzo("osso",1);
     	
-		Stanza atrio = new Stanza("Atrio");
+		atrio = new Stanza("Atrio");
 		Stanza aulaN11 = new Stanza("Aula N11");
 		Stanza aulaN10 = new Stanza("Aula N10");
 		Stanza laboratorio = new Stanza("Laboratorio Campus");
@@ -35,6 +36,5 @@ public class Labirinto {
 		atrio.addAttrezzo(osso);
 
 		stanzaVincente = biblioteca;
-		
     }
 }

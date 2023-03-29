@@ -11,10 +11,9 @@ import it.uniroma3.diadia.giocatore.Giocatore;
  */
 
 public class Partita {
-	public Stanza stanzaCorrente;
 
 	//static final private int CFU_INIZIALI = 20;
-
+	public Stanza stanzaCorrente;
 	private boolean finita;
 	//private int cfu;
 	public Labirinto labirintoDiGioco;
@@ -23,6 +22,7 @@ public class Partita {
 	
 	public Partita(){
 		this.labirintoDiGioco = new Labirinto();
+		stanzaCorrente=labirintoDiGioco.atrio;
 		this.finita = false;
 		//this.cfu = CFU_INIZIALI;
 	}
@@ -32,11 +32,11 @@ public class Partita {
 	}
 
 	public void setStanzaCorrente(Stanza stanzaCorrente) {
-		labirintoDiGioco.stanzaCorrente = stanzaCorrente;
+		this.stanzaCorrente = stanzaCorrente;
 	}
 
 	public Stanza getStanzaCorrente() {
-		return labirintoDiGioco.stanzaCorrente;
+		return this.stanzaCorrente;
 	}
 	
 	/**
