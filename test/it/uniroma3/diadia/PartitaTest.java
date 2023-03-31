@@ -48,7 +48,7 @@ class PartitaTest {
 	@Test
 	void testIsFinita() {
 		this.partita.setStanzaCorrente(this.partita.getStanzaVincente());
-		assertTrue(this.partita.vinta());
+		assertTrue(this.partita.isFinita());
 	}
 
 	@Test
