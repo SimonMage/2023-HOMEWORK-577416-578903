@@ -1,6 +1,6 @@
 package it.uniroma3.diadia.giocatore;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
-import it.uniroma3.diadia.IOConsole;
+import it.uniroma3.diadia.IO;
 
 public class Borsa {
 	public final static int DEFAULT_PESO_MAX_BORSA = 10;
@@ -52,7 +52,7 @@ public class Borsa {
 	public boolean hasAttrezzo(String nomeAttrezzo) {
 		return this.getAttrezzo(nomeAttrezzo)!=null;
 	}
-	public Attrezzo removeAttrezzo(String nomeAttrezzo, IOConsole IO) {
+	public Attrezzo removeAttrezzo(String nomeAttrezzo, IO IO) {
 		Attrezzo a = null;
 		int pos = -1;
 		for (int i= 0; i<this.numeroAttrezzi; i++) {

@@ -1,5 +1,5 @@
 package it.uniroma3.diadia.ambienti;
-import it.uniroma3.diadia.IOConsole;
+import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 /**
@@ -166,7 +166,7 @@ public class Stanza {
 	 * @param nomeAttrezzo
 	 * @return true se l'attrezzo e' stato rimosso, false altrimenti
 	 */
-	public boolean removeAttrezzo(Attrezzo attrezzo, IOConsole IO) {
+	public boolean removeAttrezzo(Attrezzo attrezzo, IO IO) {
 		
 		if(attrezzo.equals(this.getAttrezzo(attrezzo.nome))) {
 			int pos = -1;
