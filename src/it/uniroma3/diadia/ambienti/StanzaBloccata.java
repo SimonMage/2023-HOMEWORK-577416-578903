@@ -7,7 +7,7 @@ public class StanzaBloccata extends Stanza{
 	public StanzaBloccata(String nome, String attrezzoSbloccante, String DirezioneBloccata) {
 		super(nome);
 		this.attrezzoSbloccante=attrezzoSbloccante;
-		this.direzioneBloccata=direzioneBloccata;
+		this.direzioneBloccata=DirezioneBloccata;
 	}
 	
 	@Override
