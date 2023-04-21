@@ -22,7 +22,7 @@ class PartitaTest {
 
 	@Test
 	void testGetStanzaVincente() {
-		assertEquals(this.partita.getStanzaVincente(), this.partita.labirintoDiGioco.stanzaVincente);
+		assertEquals(this.partita.getStanzaVincente(), this.partita.getLabirinto().stanzaVincente);
 	}
 
 	@Test

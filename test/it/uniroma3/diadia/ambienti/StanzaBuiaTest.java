@@ -2,7 +2,6 @@ package it.uniroma3.diadia.ambienti;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,22 +9,30 @@ import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 class StanzaBuiaTest {
 	StanzaBuia stanza;
-	Attrezzo torcia;
-
+	Attrezzo lanterna;
+	Attrezzo pala;
 	@BeforeEach
 	void setUp() throws Exception {
-		this.torcia=new Attrezzo("Torcia", 1);
-		this.stanza=new StanzaBuia("Stanza buia", "Torcia");
+		this.stanza = new StanzaBuia("stanzaBuia", "Lanterna");
+		this.lanterna = new Attrezzo("Lanterna", 1);
+		this.pala = new Attrezzo("Pala", 3);
 	}
 
 	@Test
-	void testgetDescrizioneSenzaTorcia() {
-		assertEquals(this.stanza.getDescrizione(), "");
+	void testGetDescrizioneSenzaLanternaNoAttrezzo() {
+		assertEquals(this.stanza.getDescrizione(), StanzaBuia.DESCRIZIONE_STANZA_BUIA);
 	}
+
 	@Test
-	void testgetDescrizioneConTorcia() {
-		this.stanza.addAttrezzo(torcia);
-		assertEquals(this.stanza.getDescrizione(), "");
+	void testGetDescrizioneConLanterna() {
+		this.stanza.addAttrezzo(lanterna);
+		assertNotEquals(this.stanza.getDescrizione(), StanzaBuia.DESCRIZIONE_STANZA_BUIA);
+	}
+	
+	@Test
+	void testGetDescrizioneSenzaLanternaConAttrezzo() {
+		this.stanza.addAttrezzo(pala);
+		assertEquals(this.stanza.getDescrizione(), StanzaBuia.DESCRIZIONE_STANZA_BUIA);
 	}
 
 }
