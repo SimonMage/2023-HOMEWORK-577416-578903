@@ -24,6 +24,7 @@ class BorsaTest {
 	Attrezzo biglia;
 	Attrezzo chiave;
 	Attrezzo libro;
+	Attrezzo giornale;
 	IOConsole IO;
 	
 	@BeforeEach
@@ -35,6 +36,7 @@ class BorsaTest {
 		biglia=new Attrezzo("Biglia", 1);
 		chiave=new Attrezzo("Chiave", 2);
 		libro=new Attrezzo("Libro", 2);
+		giornale=new Attrezzo("Giornale", 1);
 		IO=new IOConsole();
 	}
 
@@ -97,9 +99,18 @@ class BorsaTest {
 		borsa.addAttrezzo(martello);
 		borsa.addAttrezzo(palla);
 		List<Attrezzo> listaOrdinata = this.borsa.getContenutoOrdinatoPerPeso();
-		assertEquals("Orologio", listaOrdinata.get(0).getNome());
-		assertEquals("Palla", listaOrdinata.get(1).getNome());
-		assertEquals("Martello", listaOrdinata.get(2).getNome());
+		assertEquals(orologio, listaOrdinata.get(0));
+		assertEquals(palla, listaOrdinata.get(1));
+		assertEquals(martello, listaOrdinata.get(2));
+	}
+	
+	@Test
+	void testGetContenutoOrdinatoPerPesoConDueOggettiPesoUguale() {
+		borsa.addAttrezzo(orologio);
+		borsa.addAttrezzo(biglia);
+		List<Attrezzo> listaOrdinata = this.borsa.getContenutoOrdinatoPerPeso();
+		assertEquals(biglia, listaOrdinata.get(0));
+		assertEquals(orologio, listaOrdinata.get(1));	
 	}
 	
 	@Test
@@ -123,25 +134,42 @@ class BorsaTest {
 		borsa.addAttrezzo(chiave);
 		borsa.addAttrezzo(libro);
 		
-		orologio=new Attrezzo("Orologio", 1);
-		martello=new Attrezzo("Martello", 3);
-		palla=new Attrezzo("Palla", 2);
-		biglia=new Attrezzo("Biglia", 1);
-		chiave=new Attrezzo("Chiave", 2);
-		libro=new Attrezzo("Libro", 2);
-		
 		Map<Integer,Set<Attrezzo>> mappaRaggruppata=this.borsa.getContenutoRaggruppatoPerPeso();
 		//Peso 1 kg: orologio, biglia
-		Attrezzo[] attrezzi= mappaRaggruppata.get(orologio.getPeso()).toArray(new Attrezzo[mappaRaggruppata.get(orologio.getPeso()).size()]);
-		assertEquals(biglia, attrezzi[0]);
-		assertEquals(orologio, attrezzi[1]);
+		Set<Attrezzo> s=mappaRaggruppata.get(1);
+		assertTrue(s.contains(orologio));
+		assertTrue(s.contains(biglia));
+		assertFalse(s.contains(libro));
 		//Peso 2 kg: palla, chiave, libro
-		Attrezzo[] attrezzi2= mappaRaggruppata.get(palla.getPeso()).toArray(new Attrezzo[mappaRaggruppata.get(palla.getPeso()).size()]);
-		assertEquals(libro, attrezzi2[0]);
-		assertEquals(chiave, attrezzi2[1]);
-		assertEquals(palla, attrezzi2[2]);
+		s=mappaRaggruppata.get(2);
+		assertTrue(s.contains(palla));
+		assertTrue(s.contains(chiave));
+		assertTrue(s.contains(libro));
+		assertFalse(s.contains(biglia));
 		//Peso 3 kg: martello
-		Attrezzo[] attrezzi3= mappaRaggruppata.get(martello.getPeso()).toArray(new Attrezzo[mappaRaggruppata.get(martello.getPeso()).size()]);
-		assertEquals(martello, attrezzi3[0]);
+		s=mappaRaggruppata.get(3);
+		assertTrue(s.contains(martello));
+		assertFalse(s.contains(libro));
+	}
+	
+	@Test
+	void testGetSortedSetOrdinatoPerPeso() {
+		borsa.addAttrezzo(palla); //peso 2
+		borsa.addAttrezzo(orologio); //peso 1
+		borsa.addAttrezzo(martello); //peso 3
+		borsa.addAttrezzo(biglia); //peso 1
+		borsa.addAttrezzo(chiave); //peso 2
+		borsa.addAttrezzo(libro); //peso 2
+		borsa.addAttrezzo(giornale); //peso 1
+		SortedSet<Attrezzo> setOrdinato = this.borsa.getSortedSetOrdinatoPerPeso();
+		Iterator<Attrezzo> i = setOrdinato.iterator();
+		assertEquals(biglia, i.next()); //peso 1
+		assertEquals(giornale, i.next()); //peso 1
+		assertEquals(orologio, i.next()); //peso 1
+		assertEquals(chiave, i.next()); //peso 2
+		assertEquals(libro, i.next()); //peso 2
+		assertEquals(palla, i.next()); //peso 2
+		assertEquals(martello, i.next()); //peso 3
+		
 	}
 }

@@ -20,7 +20,7 @@ public class ComandoVai implements Comando {
 			System.out.println("Direzione inesistene");
 			return;
 		}
-		partita.setStanzaCorrente(stanzaCorrente);
+		partita.setStanzaCorrente(prossimaStanza);
 		System.out.println(partita.getStanzaCorrente().getNome());
 		partita.getGiocatore().setCfu(partita.getGiocatore().getCfu()-1);		
 	}

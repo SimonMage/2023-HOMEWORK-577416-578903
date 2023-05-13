@@ -31,7 +31,7 @@ public class DiaDia {
 	
 	private IO io;
 
-	public DiaDia(IO console, Labirinto labirinto) {
+	public DiaDia(Labirinto labirinto, IO console) {
 		this.io = console;
 		this.partita = new Partita(labirinto);
 	}
@@ -73,7 +73,7 @@ public class DiaDia {
 				.addStanzaVincente("Biblioteca")
 				.addAdiacenza("Atrio", "Biblioteca", "nord")
 				.getLabirinto();
-		DiaDia gioco = new DiaDia(console, labirinto);
+		DiaDia gioco = new DiaDia(labirinto, console);
 		gioco.gioca();
 	}
 

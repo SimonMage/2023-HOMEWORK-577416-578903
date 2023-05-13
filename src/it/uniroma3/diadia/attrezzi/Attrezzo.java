@@ -62,7 +62,7 @@ public class Attrezzo implements Comparable<Attrezzo>{
 	@Override
 	public boolean equals(Object o) {
 		Attrezzo that=(Attrezzo)o;
-		return this.getPeso()==that.getPeso() && this.getNome().equals(that.getNome());
+		return this.getPeso()==that.getPeso();
 	}
 
 }
