@@ -3,11 +3,15 @@ package it.uniroma3.diadia.giocatore;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
@@ -89,7 +93,27 @@ public class Borsa{
 	}
 	
 	public SortedSet<Attrezzo> getContenutoOrdinatoPerNome() {
-		Set<Attrezzo> setOrdinato=new SortedSet<>(this.attrezzi.values());
-		
+		SortedSet<Attrezzo> setOrdinato=new TreeSet<>(new ComparatoreAttrezziOrdinatiPerNome());
+		setOrdinato.addAll(this.attrezzi.values());
+		return setOrdinato;
+	}
+	
+	public Map<Integer,Set<Attrezzo>> getContenutoRaggruppatoPerPeso() {
+		Set<Attrezzo> setAttrezzi=new TreeSet<>(this.attrezzi.values());
+		Iterator<Attrezzo> i = setAttrezzi.iterator();
+		Map<Integer,Set<Attrezzo>> mappaRaggruppata=new HashMap<>();
+		Attrezzo a;
+		while (i.hasNext()) {
+			a=i.next();
+			if (mappaRaggruppata.containsKey(a.getPeso())) {
+				mappaRaggruppata.get(a.getPeso()).add(a);
+			}
+			else {
+				Set<Attrezzo> s=new HashSet<Attrezzo>();
+				s.add(a);
+				mappaRaggruppata.put(a.getPeso(), s);
+			}
+		}
+		return mappaRaggruppata;
 	}
 	}
