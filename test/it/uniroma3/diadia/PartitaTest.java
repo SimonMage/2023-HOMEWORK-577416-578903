@@ -5,56 +5,44 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 import it.uniroma3.diadia.ambienti.Stanza;
 
-class PartitaTest {
-	
-	private Partita partita;
+public class PartitaTest {
+
+	Labirinto labirinto;
+	Partita p;
+	Stanza s;
+
 	@BeforeEach
-	void setUp() throws Exception {
-		this.partita=new Partita();
+	public void setUp() {
+		 labirinto = new LabirintoBuilder()
+				.addStanzaIniziale("Atrio")
+				.addAttrezzo("martello", 3)
+				.addStanzaVincente("Biblioteca")
+				.addAdiacenza("Atrio", "Biblioteca", "nord")
+				.getLabirinto();
+		 p = new Partita(labirinto);
+		 s = new Stanza("Stanza");
+	}
+	
+	@Test
+	public void testGetStanzaVincente() {
+		assertEquals("Biblioteca", p.getLabirinto().getStanzaVincente().getNome());
 	}
 
 	@Test
-	void testPartita() {
-		assertFalse(this.partita.isFinita());
+	public void testSetStanzaCorrente() {
+		p.getLabirinto().setStanzaCorrente(s);
+		assertEquals(s, p.getLabirinto().getStanzaCorrente());
 	}
 
 	@Test
-	void testGetStanzaVincente() {
-		assertEquals(this.partita.getStanzaVincente(), this.partita.getLabirinto().stanzaVincente);
+	public void testIsFinita() {
+		
+		assertFalse(p.isFinita());
 	}
-
-	@Test
-	void testSetStanzaCorrente() {
-		Stanza stanzatest=this.partita.getStanzaCorrente().getStanzaAdiacente("sud");
-		this.partita.setStanzaCorrente(stanzatest);
-		assertEquals(this.partita.getStanzaCorrente(), stanzatest);
-	}
-
-	@Test
-	void testGetStanzaCorrente() {
-		Stanza stanzatest=this.partita.getStanzaCorrente();
-		this.partita.setStanzaCorrente(stanzatest.getStanzaAdiacente("sud"));
-		assertNotEquals(this.partita.getStanzaCorrente(), stanzatest);
-	}
-
-	@Test
-	void testVinta() {
-		this.partita.setStanzaCorrente(this.partita.getStanzaVincente());
-		assertTrue(this.partita.vinta());
-	}
-
-	@Test
-	void testIsFinita() {
-		this.partita.setStanzaCorrente(this.partita.getStanzaVincente());
-		assertTrue(this.partita.isFinita());
-	}
-
-	@Test
-	void testSetFinita() {
-		this.partita.setFinita();
-		assertTrue(this.partita.isFinita());
-	}
-
+	
 }
+

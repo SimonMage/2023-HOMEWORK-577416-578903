@@ -5,30 +5,20 @@ import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class ComandoPrendi implements Comando {
-
 	private IO io;
 	private String nomeAttrezzo;
 	private final static String NOME = "prendi";
 
-	
+
 	@Override
 	public void esegui(Partita partita) {
-		if(partita.stanzaCorrente.getAttrezzi().length != 0) {				
-			if(partita.stanzaCorrente.hasAttrezzo(nomeAttrezzo)) {
-				Attrezzo a = partita.stanzaCorrente.getAttrezzo(nomeAttrezzo);
-				partita.stanzaCorrente.removeAttrezzo(a, io);
-				boolean esito = partita.getGiocatore().getBorsa().addAttrezzo(a);
-				if (esito) {
-					io.mostraMessaggio("Attrezzo aggiunto alla borsa");	
-				}else {
-					io.mostraMessaggio("Attrezzo non aggiunto alla borsa");						
-				}
-			}else {
-				io.mostraMessaggio("Non esiste quell'attrezzo nella stanza");				
-			}
-			
-		}else {
-			io.mostraMessaggio("Non ci sono attrezzi in questa stanza");
+		Attrezzo a = partita.getLabirinto().getStanzaCorrente().getAttrezzo(nomeAttrezzo);
+		if(partita.getGiocatore().getBorsa().getPesoRimanente(a)) {
+			partita.getGiocatore().getBorsa().addAttrezzo(a);
+			partita.getLabirinto().getStanzaCorrente().removeAttrezzo(a);
+		} 
+		else {
+			io.mostraMessaggio("Attrezzo troppo pesante per entrare nella borsa!");
 		}
 	}
 
@@ -47,7 +37,7 @@ public class ComandoPrendi implements Comando {
 	public void setIo(IO io) {
 		this.io = io;
 	}
-	
+
 	@Override
 	public String getNome() {
 		return NOME;
@@ -55,7 +45,7 @@ public class ComandoPrendi implements Comando {
 
 	@Override
 	public boolean sconosciuto() {
-        return (NOME == null);
+		// TODO Auto-generated method stub
+		return false;
 	}
-
 }

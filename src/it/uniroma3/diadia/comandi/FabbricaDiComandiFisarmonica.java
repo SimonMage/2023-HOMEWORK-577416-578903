@@ -7,12 +7,13 @@ import it.uniroma3.diadia.IO;
 public class FabbricaDiComandiFisarmonica {
 
 	private IO io;
+	private Scanner scannerDiParole;
 	public FabbricaDiComandiFisarmonica(IO io) {
 		this.io = io;
 	}
 
 	public Comando costruisciComando(String istruzione) {
-		Scanner scannerDiParole = new Scanner(istruzione);
+		scannerDiParole = new Scanner(istruzione);
 		String nomeComando = null;
 		String parametro = null;
 		Comando comando = null;

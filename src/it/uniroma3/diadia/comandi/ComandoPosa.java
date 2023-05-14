@@ -12,22 +12,14 @@ public class ComandoPosa implements Comando {
 
 	@Override
 	public void esegui(Partita partita) {
-		if(!partita.getGiocatore().getBorsa().isEmpty()) {				
-			if(partita.getGiocatore().getBorsa().hasAttrezzo(nomeAttrezzo)) {
-				Attrezzo a = partita.getGiocatore().getBorsa().getAttrezzo(nomeAttrezzo);
-				partita.getGiocatore().getBorsa().removeAttrezzo(nomeAttrezzo, io);
-				boolean esito = partita.stanzaCorrente.addAttrezzo(a);
-				if (esito) {
-					io.mostraMessaggio("Attrezzo rimosso dalla borsa");	
-				}else {
-					io.mostraMessaggio("Attrezzo non rimosso dalla borsa");						
-				}
-			}else {
-				io.mostraMessaggio("Non esiste quell'attrezzo nella borsa");				
-			}
-			
-		}else {
-			io.mostraMessaggio("Non ci sono attrezzi nella borsa");
+		Attrezzo a = partita.getGiocatore().getBorsa().getAttrezzo(nomeAttrezzo);
+
+		if(partita.getStanzaCorrente().getNumeroAttrezziPossibili()>0) {
+			partita.getLabirinto().getStanzaCorrente().addAttrezzo(a);
+			partita.getGiocatore().getBorsa().removeAttrezzo(nomeAttrezzo);
+		}
+		else {
+			io.mostraMessaggio("Non c'e' spazio nella stanza per poter inserire questo attrezzo!");
 		}
 	}
 
@@ -54,7 +46,8 @@ public class ComandoPosa implements Comando {
 
 	@Override
 	public boolean sconosciuto() {
-        return (NOME == null);
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -1,4 +1,6 @@
 package it.uniroma3.diadia;
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 import it.uniroma3.diadia.comandi.Comando;
 import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
 /**
@@ -29,9 +31,9 @@ public class DiaDia {
 	
 	private IO io;
 
-	public DiaDia(IO console) {
+	public DiaDia(Labirinto labirinto, IO console) {
 		this.io = console;
-		this.partita = new Partita();
+		this.partita = new Partita(labirinto);
 	}
 
 	public void gioca() {
@@ -57,91 +59,22 @@ public class DiaDia {
 		comandoDaEseguire = factory.costruisciComando(istruzione);
 		comandoDaEseguire.esegui(this.partita);
 		if (this.partita.vinta())
-		io.mostraMessaggio("Hai vinto!");
+			io.mostraMessaggio("Hai vinto!");
 		if (!this.partita.giocatoreIsVivo())
 			io.mostraMessaggio("Hai esaurito i CFU...");
 		return this.partita.isFinita();
-		}
-	// implementazioni dei comandi dell'utente:
-
-	/**
-	 * Stampa informazioni di aiuto.
-	 */
-/*	private void aiuto(IO IO) {
-		for(int i=0; i< elencoComandi.length; i++) 
-			IO.mostraMessaggio(elencoComandi[i]+" ");
-		IO.mostraMessaggio("");
 	}
-
-	private void prendi(String nomeAttrezzo, IO IO) {	
-		if(this.partita.stanzaCorrente.getAttrezzi().length != 0) {				
-			if(this.partita.stanzaCorrente.hasAttrezzo(nomeAttrezzo)) {
-				Attrezzo a = this.partita.stanzaCorrente.getAttrezzo(nomeAttrezzo);
-				this.partita.stanzaCorrente.removeAttrezzo(a, IO);
-				boolean esito = this.partita.getGiocatore().getBorsa().addAttrezzo(a);
-				if (esito) {
-					IO.mostraMessaggio("Attrezzo aggiunto alla borsa");	
-				}else {
-					IO.mostraMessaggio("Attrezzo non aggiunto alla borsa");						
-				}
-			}else {
-				IO.mostraMessaggio("Non esiste quell'attrezzo nella stanza");				
-			}
-			
-		}else {
-			IO.mostraMessaggio("Non ci sono attrezzi in questa stanza");
-		}
-	}	
 	
-	private void posa(String nomeAttrezzo, IO IO) {
-		if(!this.partita.getGiocatore().getBorsa().isEmpty()) {				
-			if(this.partita.getGiocatore().getBorsa().hasAttrezzo(nomeAttrezzo)) {
-				Attrezzo a = this.partita.getGiocatore().getBorsa().getAttrezzo(nomeAttrezzo);
-				this.partita.getGiocatore().getBorsa().removeAttrezzo(nomeAttrezzo, IO);
-				boolean esito = this.partita.stanzaCorrente.addAttrezzo(a);
-				if (esito) {
-					IO.mostraMessaggio("Attrezzo rimosso dalla borsa");	
-				}else {
-					IO.mostraMessaggio("Attrezzo non rimosso dalla borsa");						
-				}
-			}else {
-				IO.mostraMessaggio("Non esiste quell'attrezzo nella borsa");				
-			}
-			
-		}else {
-			IO.mostraMessaggio("Non ci sono attrezzi nella borsa");
-		}
-	}
-
-	/**
-	 * Cerca di andare in una direzione. Se c'e' una stanza ci entra 
-	 * e ne stampa il nome, altrimenti stampa un messaggio di errore
-	 */
-/*	private void vai(String direzione, IO IO) {
-		if(direzione==null)
-			IO.mostraMessaggio("Dove vuoi andare ?");
-		Stanza prossimaStanza = null;
-		prossimaStanza = this.partita.getStanzaCorrente().getStanzaAdiacente(direzione);
-		if (prossimaStanza == null)
-			IO.mostraMessaggio("Direzione inesistente");
-		else {
-			this.partita.setStanzaCorrente(prossimaStanza);
-			int cfu = this.partita.getGiocatore().getCfu();
-			this.partita.getGiocatore().setCfu(cfu--);
-		}
-		IO.mostraMessaggio(partita.getStanzaCorrente().getDescrizione());
-	}
-
-	/**
-	 * Comando "Fine".
-	 */
-/*	private void fine(IO IO) {
-		IO.mostraMessaggio("Grazie di aver giocato!");  // si desidera smettere
-	}
-*/
 	public static void main(String[] argc) {
 		IO console = new IOConsole();
-		DiaDia gioco = new DiaDia(console);
+		Labirinto labirinto = new LabirintoBuilder()
+				.addStanzaIniziale("Atrio")
+				.addAttrezzo("martello", 3)
+				.addStanzaVincente("Biblioteca")
+				.addAdiacenza("Atrio", "Biblioteca", "nord")
+				.getLabirinto();
+		DiaDia gioco = new DiaDia(labirinto, console);
 		gioco.gioca();
 	}
+
 }

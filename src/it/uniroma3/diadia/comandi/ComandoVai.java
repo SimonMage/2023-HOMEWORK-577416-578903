@@ -7,7 +7,6 @@ import it.uniroma3.diadia.ambienti.Stanza;
 public class ComandoVai implements Comando {
 	private String direzione;
 	private final static String NOME = "vai";
-	private IO io;
 	@Override
 	public void esegui(Partita partita) {
 		Stanza stanzaCorrente = partita.getStanzaCorrente();
@@ -21,7 +20,7 @@ public class ComandoVai implements Comando {
 			System.out.println("Direzione inesistene");
 			return;
 		}
-		partita.setStanzaCorrente(stanzaCorrente);
+		partita.setStanzaCorrente(prossimaStanza);
 		System.out.println(partita.getStanzaCorrente().getNome());
 		partita.getGiocatore().setCfu(partita.getGiocatore().getCfu()-1);		
 	}
@@ -43,7 +42,6 @@ public class ComandoVai implements Comando {
 	}
 	@Override
 	public void setIo(IO io) {
-		this.io = io;
 		
 	}
 }
