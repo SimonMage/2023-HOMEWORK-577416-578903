@@ -12,37 +12,50 @@ import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 class ComandoVaiTest {
 	Comando comando;
 	Partita partita;
-	Labirinto labirinto;
+	Labirinto labirintoMonoLocale;
+	Labirinto labirintoBilocale;
 	@BeforeEach
 	void setUp() throws Exception {
-		labirinto = new LabirintoBuilder()
+		labirintoBilocale = new LabirintoBuilder()
 				.addStanzaIniziale("Atrio")
 				.addAttrezzo("martello", 3)
 				.addStanzaVincente("Biblioteca")
 				.addAdiacenza("Atrio", "Biblioteca", "nord")
 				.getLabirinto();
 		this.comando=new ComandoVai();
-		this.partita=new Partita(labirinto);
+		this.partita=new Partita(labirintoBilocale);
+		labirintoMonoLocale = new LabirintoBuilder()
+				.addStanzaIniziale("Atrio")
+				.addAttrezzo("martello", 3)
+				.getLabirinto();
 	}
 	
 	@Test
-	void testEseguiDirezioneInesistente() {
+	void testEseguiDirezioneInesistenteBilocale() {
 		comando.setParametro("sud");
 		comando.esegui(partita);
-		assertEquals("Atrio", labirinto.getStanzaCorrente().getNome());
+		assertEquals("Atrio", labirintoBilocale.getStanzaCorrente().getNome());
+	}
+	
+	@Test
+	void testEseguiDirezioneInesistenteMonoLocale() {
+		this.partita=new Partita(labirintoMonoLocale);
+		comando.setParametro("sud");
+		comando.esegui(partita);
+		assertEquals("Atrio", labirintoMonoLocale.getStanzaCorrente().getNome());
 	}
 	
 	@Test
 	void testEseguiDirezioneEsistente() {
 		comando.setParametro("nord");
 		comando.esegui(partita);
-		assertEquals("Biblioteca", labirinto.getStanzaCorrente().getNome());
+		assertEquals("Biblioteca", labirintoBilocale.getStanzaCorrente().getNome());
 	}
 	
 	@Test
 	void testEseguiParametroNonSpecificato() {
 		comando.esegui(partita);
-		assertEquals("Atrio", labirinto.getStanzaCorrente().getNome());
+		assertEquals("Atrio", labirintoBilocale.getStanzaCorrente().getNome());
 	}
 
 }

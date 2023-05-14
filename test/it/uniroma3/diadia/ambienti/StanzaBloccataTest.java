@@ -16,15 +16,11 @@ public class StanzaBloccataTest {
 	
 	@BeforeEach
 	public void setUp() throws Exception {
-		sb = new StanzaBloccata("StanzaBloccata", "ovest", "grimaldello");
+		sb = new StanzaBloccata("StanzaBloccata", "grimaldello", "ovest");
 		s = new Stanza("Stanzetta");
 		a = new Attrezzo("grimaldello", 1);
 		sb.impostaStanzaAdiacente("ovest", s);
 		
-	}
-
-	@AfterEach
-	public void tearDown() throws Exception {
 	}
 
 	@Test
@@ -47,7 +43,7 @@ public class StanzaBloccataTest {
 	
 	@Test
 	public void testGetDescrizioneDirezioneBloccata() {
-		String e = "Stanza bloccata nella direzione: ovest"+"\nPrendi il grimaldello e posalo nella stanza";
+		String e = "La stanza è bloccata";
 		assertEquals(e, sb.getDescrizione());
 		
 	}
